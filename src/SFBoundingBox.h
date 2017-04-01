@@ -16,7 +16,10 @@ public:
   SFBoundingBox(const Vector2, const int, const int);
   virtual ~SFBoundingBox();
   void SetCentre(Vector2 &);
-
+  // GetWidth = gets the bounding box width - times by two because extent_x is half of the width
+  // GetHeight = gets the bounding box height - times by two because extent_y is half of the height
+  int GetWidth(){return extent_x->getX() * 2;}
+  int GetHeight(){return extent_y->getY() * 2;}
   bool CollidesWith(const shared_ptr<SFBoundingBox>);
 
 private:

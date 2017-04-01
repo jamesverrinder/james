@@ -1,0 +1,9 @@
+#!/bin/bash
+COMPILE_ERROR=$(g++ -c src/*.cpp --std=c++11)
+
+if [ -z "$COMPILE_ERROR" ]; then
+	echo $COMPILE_ERROR
+	exit -1
+
+
+exit 0

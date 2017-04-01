@@ -1,4 +1,5 @@
 #include "SFApp.h"
+#include <iostream>
 
 SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_window(window) {
   int canvas_w, canvas_h;
@@ -8,14 +9,29 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
   player  = make_shared<SFAsset>(SFASSET_PLAYER, sf_window);
   auto player_pos = Point2(canvas_w/2, 22);
   player->SetPosition(player_pos);
+  
+  // max_column = total aliens going across the screen
+  // max_row = total row for each alien 
+  const int max_column = 20;
+  const int max_row = 5;
 
-  const int number_of_aliens = 10;
-  for(int i=0; i<number_of_aliens; i++) {
-    // place an alien at width/number_of_aliens * i
-    auto alien = make_shared<SFAsset>(SFASSET_ALIEN, sf_window);
-    auto pos   = Point2((canvas_w/number_of_aliens) * i, 200.0f);
-    alien->SetPosition(pos);
-    aliens.push_back(alien);
+  // start_x_pos = starting x position
+  // start_y_pos = starting y position  
+  int start_x_pos = 20;
+  int start_y_pos = 400;
+
+  // row = current row
+  // column = current_column;
+  for(int row = 0; row < max_row; row++) {
+    for(int column = 0 ; column < max_column; column++) {
+        auto alien = make_shared<SFAsset>(SFASSET_ALIEN, sf_window); // Makes alien
+
+        // start_x_pos + (alien->GetBoundingBox()->GetWidth() * column) = Places alien next to each other when the column goes up
+        // start_y_pos - (alien->GetBoundingBox()->GetHeight() * row) = Place the alien below the other alien when the row goes up
+        auto pos = Point2( start_x_pos + (alien->GetBoundingBox()->GetWidth() * column), start_y_pos - (alien->GetBoundingBox()->GetHeight() * row));
+        alien->SetPosition(pos);
+        aliens.push_back(alien);
+    }
   }
 
   auto coin = make_shared<SFAsset>(SFASSET_COIN, sf_window);
@@ -25,7 +41,9 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
 }
 
 SFApp::~SFApp() {
+  
 }
+
 
 /**
  * Handle all events that come from SDL.
@@ -46,6 +64,12 @@ void SFApp::OnEvent(SFEvent& event) {
     break;
   case SFEVENT_PLAYER_RIGHT:
     player->GoEast();
+    break;
+  case SFEVENT_PLAYER_UP:
+    player-> GoNorth();
+    break;
+  case SFEVENT_PLAYER_DOWN:
+    player-> GoSouth();
     break;
   case SFEVENT_FIRE:
     fire ++;
