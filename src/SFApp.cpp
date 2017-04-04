@@ -128,10 +128,10 @@ void SFApp::OnUpdateWorld() {
  for(auto p : projectiles) {
         if(p->IsAlive()) {
        tmp.push_back(p);}
-//    }
+   }
   
- // projectiles.clear();
-  //}
+ projectiles.clear();
+}
 
 void SFApp::OnRender() {
   SDL_RenderClear(sf_window->getRenderer());
