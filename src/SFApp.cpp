@@ -118,12 +118,21 @@ void SFApp::OnUpdateWorld() {
   list<shared_ptr<SFAsset>> tmp;
   for(auto a : aliens) {
     if(a->IsAlive()) {
-      tmp.push_back(a);
-    }
+      tmp.push_back(a);}
   }
+
   aliens.clear();
   aliens = list<shared_ptr<SFAsset>>(tmp);
-}
+
+//remove projectile 
+ for(auto p : projectiles) {
+        if(p->IsAlive()) {
+       tmp.push_back(p);}
+    }
+  
+  projectiles.clear();
+  }
+
 
 void SFApp::OnRender() {
   SDL_RenderClear(sf_window->getRenderer());
