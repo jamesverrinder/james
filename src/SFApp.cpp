@@ -114,6 +114,7 @@ void SFApp::OnUpdateWorld() {
       }
     }
   }
+  
 
   // remove dead aliens (the long way)
   list<shared_ptr<SFAsset>> tmp;
@@ -135,25 +136,26 @@ void SFApp::OnUpdateWorld() {
  projectiles.clear();
  
 }
-
-// Detect collisions with coins 
-      for(auto c : coins) {
-      if(p->CollidesWith(a)) {
-        p->HandleCollision();
+// Detect collisions with coins
+for(auto c : coins) {
+    if( player->CollidesWith(c)) {
         c->HandleCollision();
       }
     }
-  }
-  //remove coins
- for(auto c : projectiles) {
-        if(c->IsAlive()) {
-       tmp.push_back(p);}
-   }
-  
- projectiles.clear();
  
-}
-void SFApp::OnRender() {
+  
+  //remove coins
+   list<shared_ptr<SFAsset>> tmp;
+ for(auto c : coins) {
+        if(c->IsAlive()) {
+       tmp.push_back(c);}
+ }
+ coins.clear();
+ 
+
+ }
+ 
+ void SFApp::OnRender() {
   SDL_RenderClear(sf_window->getRenderer());
 
   // draw the player
