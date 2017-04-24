@@ -9,7 +9,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
   player  = make_shared<SFAsset>(SFASSET_PLAYER, sf_window);
   auto player_pos = Point2(canvas_w/2, 22);
   player->SetPosition(player_pos);
-  
+
   // max_column = total aliens going across the screen
   // max_row = total row for each alien 
   const int max_column = 20;
@@ -35,9 +35,10 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
   }
 
   auto coin = make_shared<SFAsset>(SFASSET_COIN, sf_window);
-  auto pos  = Point2((canvas_w/4), 100);
+  auto pos  = Point2((canvas_w/2), 500);
   coin->SetPosition(pos);
   coins.push_back(coin);
+
 }
 
 SFApp::~SFApp() {
@@ -96,7 +97,7 @@ void SFApp::OnUpdateWorld() {
   }
 
   for(auto c: coins) {
-    c->GoNorth();
+    c->GoSouth();
   }
 
   // Update enemy positions
@@ -123,6 +124,7 @@ void SFApp::OnUpdateWorld() {
 
   aliens.clear();
   aliens = list<shared_ptr<SFAsset>>(tmp);
+  
 
 //remove projectile 
  for(auto p : projectiles) {
@@ -131,8 +133,27 @@ void SFApp::OnUpdateWorld() {
    }
   
  projectiles.clear();
+ 
 }
 
+// Detect collisions with coins 
+  for(auto p : projectiles) {
+    for(auto c : coins) {
+      if(p->CollidesWith(a)) {
+        p->HandleCollision();
+        c->HandleCollision();
+      }
+    }
+  }
+  //remove coins
+ for(auto c : projectiles) {
+        if(c->IsAlive()) {
+       tmp.push_back(p);}
+   }
+  
+ projectiles.clear();
+ 
+}
 void SFApp::OnRender() {
   SDL_RenderClear(sf_window->getRenderer());
 
