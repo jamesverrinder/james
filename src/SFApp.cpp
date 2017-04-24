@@ -123,7 +123,7 @@ void SFApp::OnUpdateWorld() {
       tmp.push_back(a);}
   }
 
-  aliens.clear();
+ 
   aliens = list<shared_ptr<SFAsset>>(tmp);
   
 
@@ -133,9 +133,8 @@ void SFApp::OnUpdateWorld() {
        tmp.push_back(p);}
    }
   
- projectiles.clear();
  
-}
+ 
 // Detect collisions with coins
 for(auto c : coins) {
     if( player->CollidesWith(c)) {
@@ -145,14 +144,11 @@ for(auto c : coins) {
  
   
   //remove coins
-   list<shared_ptr<SFAsset>> tmp;
+  
  for(auto c : coins) {
         if(c->IsAlive()) {
        tmp.push_back(c);}
  }
- coins.clear();
- 
-
  }
  
  void SFApp::OnRender() {
