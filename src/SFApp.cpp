@@ -137,8 +137,7 @@ void SFApp::OnUpdateWorld() {
 }
 
 // Detect collisions with coins 
-  for(auto p : projectiles) {
-    for(auto c : coins) {
+      for(auto c : coins) {
       if(p->CollidesWith(a)) {
         p->HandleCollision();
         c->HandleCollision();
