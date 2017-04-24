@@ -111,6 +111,7 @@ void SFApp::OnUpdateWorld() {
       if(p->CollidesWith(a)) {
         p->HandleCollision();
         a->HandleCollision();
+
       }
     }
   }
@@ -122,34 +123,50 @@ void SFApp::OnUpdateWorld() {
     if(a->IsAlive()) {
       tmp.push_back(a);}
   }
+  aliens.clear();
+   aliens = list<shared_ptr<SFAsset>>(tmp);
+   tmp.clear();
 
- 
-  aliens = list<shared_ptr<SFAsset>>(tmp);
-  
+   // detect collions with projectial with alien
+
+  for (auto p : projectiles){
+    for(auto a : aliens){
+      if (p->CollidesWith(a)){
+      p->HandleCollision();
+      }
+    }
+  }
 
 //remove projectile 
  for(auto p : projectiles) {
         if(p->IsAlive()) {
        tmp.push_back(p);}
    }
+   projectiles.clear();
+ projectiles = list<shared_ptr<SFAsset>>(tmp);
+ tmp.clear();
+
   
- 
- 
 // Detect collisions with coins
 for(auto c : coins) {
     if( player->CollidesWith(c)) {
         c->HandleCollision();
       }
-    }
- 
-  
-  //remove coins
-  
+}
+
+
+//remove coins  
  for(auto c : coins) {
         if(c->IsAlive()) {
-       tmp.push_back(c);}
+       tmp.push_back(c); }
  }
- }
+
+    coins.clear();
+coins = list<shared_ptr<SFAsset>>(tmp);
+tmp.clear();
+
+  
+
  
  void SFApp::OnRender() {
   SDL_RenderClear(sf_window->getRenderer());
