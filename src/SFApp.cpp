@@ -140,7 +140,8 @@ void SFApp::OnUpdateWorld() {
 //remove projectile 
  for(auto p : projectiles) {
         if(p->IsAlive()) {
-       tmp.push_back(p);}
+       tmp.push_back(p);
+       }
    }
    projectiles.clear();
  projectiles = list<shared_ptr<SFAsset>>(tmp);
@@ -152,21 +153,21 @@ for(auto c : coins) {
     if( player->CollidesWith(c)) {
         c->HandleCollision();
       }
-}
-
+    }
 
 //remove coins  
  for(auto c : coins) {
         if(c->IsAlive()) {
-       tmp.push_back(c); }
+       tmp.push_back(c);
+       
+      }
  }
-
-    coins.clear();
+ coins.clear();
 coins = list<shared_ptr<SFAsset>>(tmp);
 tmp.clear();
 
   
-
+}
  
  void SFApp::OnRender() {
   SDL_RenderClear(sf_window->getRenderer());
