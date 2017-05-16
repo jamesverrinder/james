@@ -6,10 +6,20 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &canvas_w, &canvas_h);
 
   app_box = make_shared<SFBoundingBox>(Vector2(canvas_w, canvas_h), canvas_w, canvas_h);
+
   player  = make_shared<SFAsset>(SFASSET_PLAYER, sf_window);
   auto player_pos = Point2(canvas_w/2, 22);
-  player->SetPosition(player_pos);
-
+  player -> SetPosition(player_pos);
+ // number of walls
+    const int number_of_walls=3;
+    for(int i=0; i< number_of_walls; i++){
+        // making the wall
+        auto Wall  = make_shared<SFAsset>(SFASSET_WALL, sf_window);
+        int xpos = (( canvas_w/ number_of_walls)*i)+60;
+        auto pos  = Point2(xpos,88);// setting the poss of the bricks
+        Wall ->  SetPosition(pos);
+        Walls.push_back(Wall);
+    }
   // max_column = total aliens going across the screen
   // max_row = total row for each alien 
   const int max_column = 20;
@@ -33,6 +43,7 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
         aliens.push_back(alien);
     }
   }
+
   auto coin = make_shared<SFAsset>(SFASSET_COIN, sf_window);
   auto pos  = Point2((canvas_w/2), 500);
   coin->SetPosition(pos);
@@ -174,6 +185,11 @@ tmp.clear();
 
   // draw the player
   player->OnRender();
+
+ // Draw wall
+  for(auto W: Walls){
+    if(W->IsAlive()) { W->OnRender();}
+  }
 
   for(auto p: projectiles) {
     if(p->IsAlive()) {p->OnRender();}
