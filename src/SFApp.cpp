@@ -33,16 +33,6 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
         aliens.push_back(alien);
     }
   }
- 
-// creating the wall 
-//const int NumberOfWalls = 3;
-//for(int i=0; i < NumberOfWalls; i++){
-  //auto Wall = make_shered<SFAsset>(SFASSET_Wall, sf_window);
-  //auto pos = point2((( canvas_w/NumberOfWalls) *i 0)+ 60, 88);
-  //Wall ->SetPosition(pos);
-  //Wall.push_back(Wall);
-}
-    
   auto coin = make_shared<SFAsset>(SFASSET_COIN, sf_window);
   auto pos  = Point2((canvas_w/2), 500);
   coin->SetPosition(pos);
@@ -196,10 +186,8 @@ tmp.clear();
   for(auto c: coins) {
     c->OnRender();
   }
-// Draw wall 
-for (auto W: walls) {
-  if (W -> IsAlive()) {W ->OnRender();}
-}
+
+
   // Switch the off-screen buffer to be on-screen
   SDL_RenderPresent(sf_window->getRenderer());
 }

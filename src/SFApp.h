@@ -28,7 +28,8 @@ public:
 
   void    FireProjectile();
 private:
-  bool                    is_running;
+  shared_ptr<SFBoundingBox> bbox;
+    bool                    is_running;
 
   shared_ptr<SFWindow>       sf_window;
 
@@ -37,7 +38,7 @@ private:
   list<shared_ptr<SFAsset> > projectiles;
   list<shared_ptr<SFAsset> > aliens;
   list<shared_ptr<SFAsset> > coins;
-  list<shared_ptr<SFAsset> > walls;
+  list<shared_ptr<SFAsset> > Walls;
 
   int fire;
 };
