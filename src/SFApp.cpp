@@ -147,7 +147,6 @@ void SFApp::OnUpdateWorld() {
     }
   }
 
-
 //remove projectile 
  for(auto p : projectiles) {
         if(p->IsAlive()) {
