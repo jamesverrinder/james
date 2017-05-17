@@ -11,12 +11,13 @@ SFApp::SFApp(std::shared_ptr<SFWindow> window) : fire(0), is_running(true), sf_w
   auto player_pos = Point2(canvas_w/2, 22);
   player -> SetPosition(player_pos);
  // number of walls
-    const int number_of_walls=3;
+    const int number_of_walls=4;
     for(int i=0; i< number_of_walls; i++){
+
         // making the wall
         auto Wall  = make_shared<SFAsset>(SFASSET_WALL, sf_window);
         int xpos = (( canvas_w/ number_of_walls)*i)+60;
-        auto pos  = Point2(xpos,88);// setting the poss of the bricks
+        auto pos  = Point2(xpos,180);// setting the poss of the bricks
         Wall ->  SetPosition(pos);
         Walls.push_back(Wall);
     }
@@ -149,8 +150,16 @@ void SFApp::OnUpdateWorld() {
     // detect collions player with Wall
 
   for (auto W : Walls){
-      if (player->CollidesWith(W)){
+    if (player->CollidesWith(W)){
         W-> HandleCollision();
+         }
+    }
+    // project collision with wall 
+    for (auto p: projectiles){
+      for (auto W : Walls){
+      if( p ->CollidesWith(W)){
+        p->HandleCollision();
+      }
       }
     }
 
