@@ -146,6 +146,21 @@ void SFApp::OnUpdateWorld() {
       }
     }
   }
+    // detect collions player with Wall
+
+  for (auto W : Walls){
+      if (player->CollidesWith(W)){
+        W-> HandleCollision();
+      }
+    }
+
+    // player clides with alien
+   for (auto a : aliens){
+      if (player ->CollidesWith(a)){
+      a->HandleCollision();
+      }
+    }
+  
 
 //remove projectile 
  for(auto p : projectiles) {
